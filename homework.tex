@@ -1,20 +1,40 @@
+% 
+% Homework Details
+% 
+\newcommand{\hmwkTitle}{Homework\ \#11}
+\newcommand{\hmwkDueDate}{April 26, 2023}
+\newcommand{\hmwkClass}{MATH 222}
+\newcommand{\hmwkClassTime}{Section 2}
+\newcommand{\hmwkClassInstructor}{Professor Levine}
+\newcommand{\hmwkAuthorName}{\textbf{Maxwell Lin}}
+
+% 
+% Document class
+% 
 \documentclass{article}
 
+% 
+% Packages
+% 
 \usepackage{fancyhdr}
 \usepackage{extramarks}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{tikz}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
-\usetikzlibrary{automata,positioning}
+\usetikzlibrary{automata, positioning}
 
 %
 % Basic Document Settings
 %
-
 \topmargin=-0.45in
 \evensidemargin=0in
 \oddsidemargin=0in
@@ -24,9 +44,10 @@
 
 \linespread{1.1}
 
+% Headers/Footers
 \pagestyle{fancy}
 \lhead{\hmwkAuthorName}
-\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\chead{\hmwkClass\ —\ \hmwkTitle}
 \rhead{\firstxmark}
 \lfoot{\lastxmark}
 \cfoot{\thepage}
@@ -35,6 +56,9 @@
 \renewcommand\footrulewidth{0.4pt}
 
 \setlength\parindent{0pt}
+
+% Black square QED toggle
+% \renewcommand{\qedsymbol}{$\blacksquare$}
 
 %
 % Create Problem Sections
@@ -77,32 +101,13 @@
 }
 
 %
-% Homework Details
-%   - Title
-%   - Due date
-%   - Class
-%   - Section/Time
-%   - Instructor
-%   - Author
-%
-
-\newcommand{\hmwkTitle}{Homework\ \#2}
-\newcommand{\hmwkDueDate}{February 12, 2014}
-\newcommand{\hmwkClass}{Calculus}
-\newcommand{\hmwkClassTime}{Section A}
-\newcommand{\hmwkClassInstructor}{Professor Isaac Newton}
-\newcommand{\hmwkAuthorName}{\textbf{Josh Davis} \and \textbf{Davis Josh}}
-
-%
 % Title Page
 %
 
 \title{
-    \vspace{2in}
-    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
-    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 3:10pm}\\
-    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
-    \vspace{3in}
+    \vspace{-.5in}
+    \textmd{\textbf{\hmwkClass\ —\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ \hmwkDueDate}\\
 }
 
 \author{\hmwkAuthorName}
@@ -121,7 +126,7 @@
 \newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
 
 % For partial derivatives
-\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
 
 % Integral dx
 \newcommand{\dx}{\mathrm{d}x}
@@ -135,405 +140,590 @@
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\Bias}{\mathrm{Bias}}
 
+% Set of reals
+\newcommand{\R}{\mathbb{R}}
+
+% Set of integers
+\newcommand{\Z}{\mathbb{Z}}
+
+% Right arrow
+\newcommand{\ra}{\rightarrow}
+
+% Differentiation operators
+\newcommand{\D}{\mathbf{D}}
+\newcommand{\Hess}{\mathbf{H}}
+
+% Reset equation numbering
+\newcommand{\reset}{\setcounter{equation}{0}}
+
+% Insert picture
+\newcommand{\pic}[1]{\includegraphics[width=\textwidth]{#1}}
+
+% Divergence operator
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\curl}{\operatorname{curl}}
+
+% Matrix spacing
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
 \begin{document}
 
 \maketitle
 
-\pagebreak
-
 \begin{homeworkProblem}
-    Give an appropriate positive constant \(c\) such that \(f(n) \leq c \cdot
-    g(n)\) for all \(n > 1\).
+    Section 7.2: \#4
+    
+    Evaluate each of the following line integrals:
+    \\(a) $\int_{\mathbf{c}} x d y-y d x, \quad \mathbf{c}(t)=(\cos t, \sin t)$ $0 \leq t \leq 2 \pi$
+    \\(b) $\int_{\mathbf{c}} x d x+y d y, \quad \mathbf{c}(t)=(\cos \pi t, \sin \pi t)$, $0 \leq t \leq 2$
+    \\(c) $\int_{\mathbf{c}} y z d x+x z d y+x y d z$, where c consists of straight-line segments joining $(1,0,0)$ to $(0,1,0)$ to $(0,0,1)$
+    \\(d) $\int_{\mathbf{c}} x^2 d x-x y d y+d z$, where $\mathbf{c}$ is the parabola $z=x^2, y=0$ from $(-1,0,1)$ to $(1,0,1)$
+    \\
 
-    \begin{enumerate}
-        \item \(f(n) = n^2 + n + 1\), \(g(n) = 2n^3\)
-        \item \(f(n) = n\sqrt{n} + n^2\), \(g(n) = n^2\)
-        \item \(f(n) = n^2 - n + 1\), \(g(n) = n^2 / 2\)
+    \solution
+
+    \begin{enumerate}[(a)]
+        \item We have
+        \begin{align*}
+            x&=\cos t & dx &= -\sin t \, dt \\
+            y &= \sin t & dy &= \cos t \, dt.
+        \end{align*}
+
+        Thus,
+        \begin{align*}
+            \int_{\mathbf{c}} x d y-y d x &= \int_0^{2\pi} \cos^2(t)+\sin^2(t) \, dt \\
+            &= 2\pi.
+        \end{align*}
+
+        \item We have
+        \begin{align*}
+            \int_{\mathbf{c}} x d x+y d y &= \int_0^2 -\pi \cos(\pi t)\sin(\pi t) + \pi\sin(\pi t)\cos(\pi t) \, dt \\
+            &= 0.
+        \end{align*}
+
+        \item We have
+        \begin{align*}
+            \int_{\mathbf{c}} y z d x+x z d y+x y d z = \int_{c_1} y z d x+x z d y+x y d z + \int_{c_2} y z d x+x z d y+x y d z
+        \end{align*}
+        where $c_1$ parameterizes the straight-line segment joining $(1,0,0)$ to $(0,1,0)$ and $c_2$ parameterizes the straight-line-segment joining $(0,1,0)$ to $(0,0,1)$.
+
+        We obtain
+        \begin{align*}
+            c_1 &= (1-t, t, 0) \qquad t \in [0,1] \\ 
+            c_2 &= (0, 1-t, t) \qquad t \in [0,1].
+        \end{align*}
+
+        Thus,
+        \begin{align*}
+            \int_{\mathbf{c}} y z d x+x z d y+x y d z &= \int_{c_1} 0+0+0 + \int_{c_2} 0+0+0 \\
+            &= 0.
+        \end{align*}
+
+        \item 
+        We parameterize $c$ with
+        \begin{align*}
+            c(t) = (t,0,t^2) \qquad t \in [-1,1].
+        \end{align*}
+
+        Thus,
+        \begin{align*}
+            \int_{\mathbf{c}} x^2 d x-x y d y+d z &= \int_{-1}^1t^2+2t \, dt \\
+            &= \left[\frac{t^3}{3}+t^2\right]_{-1}^1 \\
+            &= \frac{2}{3}.
+        \end{align*}
     \end{enumerate}
-
-    \textbf{Solution}
-
-    We solve each solution algebraically to determine a possible constant
-    \(c\).
-    \\
-
-    \textbf{Part One}
-
-    \[
-        \begin{split}
-            n^2 + n + 1 &=
-            \\
-            &\leq n^2 + n^2 + n^2
-            \\
-            &= 3n^2
-            \\
-            &\leq c \cdot 2n^3
-        \end{split}
-    \]
-
-    Thus a valid \(c\) could be when \(c = 2\).
-    \\
-
-    \textbf{Part Two}
-
-    \[
-        \begin{split}
-            n^2 + n\sqrt{n} &=
-            \\
-            &= n^2 + n^{3/2}
-            \\
-            &\leq n^2 + n^{4/2}
-            \\
-            &= n^2 + n^2
-            \\
-            &= 2n^2
-            \\
-            &\leq c \cdot n^2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-    \\
-
-    \textbf{Part Three}
-
-    \[
-        \begin{split}
-            n^2 - n + 1 &=
-            \\
-            &\leq n^2
-            \\
-            &\leq c \cdot n^2/2
-        \end{split}
-    \]
-
-    Thus a valid \(c\) is \(c = 2\).
-
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Let \(\Sigma = \{0, 1\}\). Construct a DFA \(A\) that recognizes the
-    language that consists of all binary numbers that can be divided by 5.
-    \\
-
-    Let the state \(q_k\) indicate the remainder of \(k\) divided by 5. For
-    example, the remainder of 2 would correlate to state \(q_2\) because \(7
-    \mod 5 = 2\).
-
-    \begin{figure}[h]
-        \centering
-        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-            \node[state, accepting, initial] (q_0)   {$q_0$};
-            \node[state] (q_1) [right=of q_0] {$q_1$};
-            \node[state] (q_2) [right=of q_1] {$q_2$};
-            \node[state] (q_3) [right=of q_2] {$q_3$};
-            \node[state] (q_4) [right=of q_3] {$q_4$};
-            \path[->]
-                (q_0)
-                    edge [loop above] node {0} (q_0)
-                    edge node {1} (q_1)
-                (q_1)
-                    edge node {0} (q_2)
-                    edge [bend right=-30] node {1} (q_3)
-                (q_2)
-                    edge [bend left] node {1} (q_0)
-                    edge [bend right=-30] node {0} (q_4)
-                (q_3)
-                    edge node {1} (q_2)
-                    edge [bend left] node {0} (q_1)
-                (q_4)
-                    edge node {0} (q_3)
-                    edge [loop below] node {1} (q_4);
-        \end{tikzpicture}
-        \caption{DFA, \(A\), this is really beautiful, ya know?}
-        \label{fig:multiple5}
-    \end{figure}
-
-    \textbf{Justification}
-    \\
-
-    Take a given binary number, \(x\). Since there are only two inputs to our
-    state machine, \(x\) can either become \(x0\) or \(x1\). When a 0 comes
-    into the state machine, it is the same as taking the binary number and
-    multiplying it by two. When a 1 comes into the machine, it is the same as
-    multipying by two and adding one.
-    \\
-
-    Using this knowledge, we can construct a transition table that tell us
-    where to go:
-
-    \begin{table}[ht]
-        \centering
-        \begin{tabular}{c || c | c | c | c | c}
-            & \(x \mod 5 = 0\)
-            & \(x \mod 5 = 1\)
-            & \(x \mod 5 = 2\)
-            & \(x \mod 5 = 3\)
-            & \(x \mod 5 = 4\)
-            \\
-            \hline
-            \(x0\) & 0 & 2 & 4 & 1 & 3 \\
-            \(x1\) & 1 & 3 & 0 & 2 & 4 \\
-        \end{tabular}
-    \end{table}
-
-    Therefore on state \(q_0\) or (\(x \mod 5 = 0\)), a transition line should
-    go to state \(q_0\) for the input 0 and a line should go to state \(q_1\)
-    for input 1. Continuing this gives us the Figure~\ref{fig:multiple5}.
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-    Write part of \alg{Quick-Sort($list, start, end$)}
-
-    \begin{algorithm}[]
-        \begin{algorithmic}[1]
-            \Function{Quick-Sort}{$list, start, end$}
-                \If{$start \geq end$}
-                    \State{} \Return{}
-                \EndIf{}
-                \State{} $mid \gets \Call{Partition}{list, start, end}$
-                \State{} \Call{Quick-Sort}{$list, start, mid - 1$}
-                \State{} \Call{Quick-Sort}{$list, mid + 1, end$}
-            \EndFunction{}
-        \end{algorithmic}
-        \caption{Start of QuickSort}
-    \end{algorithm}
-\end{homeworkProblem}
-
-\pagebreak
-
-\begin{homeworkProblem}
-    Suppose we would like to fit a straight line through the origin, i.e.,
-    \(Y_i = \beta_1 x_i + e_i\) with \(i = 1, \ldots, n\), \(\E [e_i] = 0\),
-    and \(\Var [e_i] = \sigma^2_e\) and \(\Cov[e_i, e_j] = 0, \forall i \neq
-    j\).
+    Section 7.2: \#12
+    
+    Suppose $\mathbf{c}_1$ and $\mathbf{c}_2$ are two paths with the same endpoints and $\mathbf{F}$ is a vector field. Show that $\int_{\mathbf{c}_1} \mathbf{F} \cdot d \mathbf{s}=\int_{\mathbf{c}_2} \mathbf{F} \cdot d \mathbf{s}$ is equivalent to $\int_c \mathbf{F} \cdot d \mathbf{s}=0$, where $C$ is the closed curve obtained by first moving along $\mathbf{c}_1$ and then moving along $\mathbf{c}_2$ in the opposite direction.
     \\
 
-    \part
+    \solution
+    
+    Since the oriented curve $C$ can be obtained by moving along the curve parameterized by $c_1$ then moving along the curve parameterized by $c_2$ in the opposite orientation,
+    \begin{align*}
+        \int_C F \cdot ds = \int_{c_1} F \cdot ds - \int_{c_2} F \cdot ds = 0.
+    \end{align*}
+    This is equivalent to
+    \begin{equation*}
+        \int_{\mathbf{c}_1} \mathbf{F} \cdot d \mathbf{s}=\int_{\mathbf{c}_2} \mathbf{F} \cdot d \mathbf{s}.
+    \end{equation*}
+    
+\end{homeworkProblem}
 
-    Find the least squares esimator for \(\hat{\beta_1}\) for the slope
-    \(\beta_1\).
+\begin{homeworkProblem}
+    Section 7.3: \#8
+
+    Match the following parametrizations to the surfaces shown in the figures.
+    \\(a) $\Phi(u, v)=(u \cos v, u \sin v, 4-u \cos v-u \sin v)$; $u \in[0,1], v \in[0,2 \pi]$
+    \\(b) $\Phi(u, v)=\left(u \cos v, u \sin v, 4-u^2\right)$
+    \\(c) $\Phi(u, v)=\left(u, v, \frac{1}{3}(12-8 u-3 v)\right)$
+    \\(d) $\Phi(u, v)=\left(\left(u^2+6 u+11\right) \cos v\right.$, $\left.u,\left(u^2+6 u+11\right) \sin v\right)$
+    
+    \includegraphics[scale=.5]{11-3}
+
+    \solution
+
+    \begin{enumerate}[(a)]
+        \item (i)
+        \item (iii)
+        \item (ii)
+        \item (iv)
+    \end{enumerate}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.3: \#23
+
+    The image of the parametrization
+    \begin{equation*}
+    \begin{aligned}
+    \Phi(u, v) & =(x(u, v), y(u, v), z(u, v)) \\
+    & =((R+r \cos u) \cos v,(R+r \cos u) \sin v, r \sin u)
+    \end{aligned}
+    \end{equation*}
+    with $0 \leq u, v \leq 2 \pi, 0<r<1, R>1$ parametrizes a torus (or doughnut) $S$.
+    \\(a) Show that all points in the image $(x, y, z)$ satisfy:
+    \begin{equation*}
+    \left(\sqrt{x^2+y^2}-R\right)^2+z^2=r^2 .
+    \end{equation*}
+    \\(b) Show that the image surface is regular at all points.
     \\
 
     \solution
 
-    To find the least squares estimator, we should minimize our Residual Sum
-    of Squares, RSS:
+    \begin{enumerate}[(a)]
+        \item We have
+        \begin{align*}
+            \left(\sqrt{x^2+y^2}-R\right)^2+z^2&=\left(\sqrt{(R+r\cos u)^2\cos^2 v + (R+r\cos u)^2\sin^2v}-R\right)^2+r^2\sin^2u \\
+            &= r^2\cos^2u + r^2\sin^2u \\
+            &= r^2
+        \end{align*}
+        as required.
 
-    \[
-        \begin{split}
-            RSS &= \sum_{i = 1}^{n} {(Y_i - \hat{Y_i})}^2
-            \\
-            &= \sum_{i = 1}^{n} {(Y_i - \hat{\beta_1} x_i)}^2
-        \end{split}
-    \]
+        \item 
+        To show that the image surface is regular at all points, we must show that $T_u \times T_v \ne 0$.
 
-    By taking the partial derivative in respect to \(\hat{\beta_1}\), we get:
+        We have
+        \begin{align*}
+            T_u=\begin{bmatrix}
+                -r\sin u\cos v \\
+                -r\sin u \sin v \\
+                r \cos u
+            \end{bmatrix} \qquad
+            T_v=\begin{bmatrix}
+                -(R+r\cos u) \sin v\\
+                (R+r\cos u) \cos v\\
+                0
+            \end{bmatrix}
+        \end{align*}
+        \begin{equation*}
+            T_u \times T_v = -r(R+r\cos u) \begin{bmatrix}
+                \cos u \cos v \\
+                \cos u \sin v \\
+                \sin u.
+            \end{bmatrix}
+        \end{equation*}
 
-    \[
-        \pderiv{
-            \hat{\beta_1}
-        }{RSS}
-        = -2 \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-        = 0
-    \]
+        By assumption, $r \ne 0$. Additionally, $R+r\cos u \ne 0$ since $-1 < r\cos u < 1$ and $R>1$. Therefore, we must prove that 
+        \begin{equation*}
+            A = \begin{bmatrix}
+                \cos u \cos v \\
+                \cos u \sin v \\
+                \sin u
+            \end{bmatrix} \ne 0.
+        \end{equation*}
+        For the sake of contradiction, assume that $A=0$. Then, $\sin u = 0$ which means $u=k\pi$ for $k \in \Z^+ \cup \{0\}$. We also must have that 
+        \begin{gather*}
+            \cos u \cos v = \cos u \sin v = 0 \\
+            \cos v = \sin v = 0 \qquad \text{since $\cos u \ne 0$}.
+        \end{gather*}
+        However, this equation has no solutions. Therefore, $A\ne0$ and the image surface must be regular at all points.
+    \end{enumerate}
+\end{homeworkProblem}
 
-    This gives us:
-
-    \[
-        \begin{split}
-            \sum_{i = 1}^{n} {x_i (Y_i - \hat{\beta_1} x_i)}
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \sum_{i = 1}^{n} \hat{\beta_1} x_i^2
-            \\
-            &= \sum_{i = 1}^{n} {x_i Y_i} - \hat{\beta_1}\sum_{i = 1}^{n} x_i^2
-        \end{split}
-    \]
-
-    Solving for \(\hat{\beta_1}\) gives the final estimator for \(\beta_1\):
-
-    \[
-        \begin{split}
-            \hat{\beta_1}
-            &= \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
-
-    \pagebreak
-
-    \part
-
-    Calculate the bias and the variance for the estimated slope
-    \(\hat{\beta_1}\).
+\begin{homeworkProblem}
+    Section 7.4: \#1
+    
+    Find the surface area of the unit sphere $S$ represented parametrically by $\boldsymbol{\Phi}: D \rightarrow S \subset \mathbb{R}^3$, where $D$ is the rectangle $0 \leq \theta \leq 2 \pi, 0 \leq \phi \leq \pi$ and $\boldsymbol{\Phi}$ is given by the equations
+    \begin{equation*}
+    x=\cos \theta \sin \phi, \quad y=\sin \theta \sin \phi, \quad z=\cos \phi
+    \end{equation*}
+    Note that we can represent the entire sphere parametrically, but we cannot represent it in the form $z=f(x, y)$
     \\
 
     \solution
 
-    For the bias, we need to calculate the expected value
-    \(\E[\hat{\beta_1}]\):
+    The formula for surface area is
+    \begin{equation*}
+        \iint_D \|T_\theta \times T_\phi\| \, dA.
+    \end{equation*}
 
-    \[
-        \begin{split}
-            \E[\hat{\beta_1}]
-            &= \E \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &= \frac{
-                \sum {x_i \E[Y_i]}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i (\beta_1 x_i)}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1 \frac{
-                \sum {x_i^2 \beta_1}
-            }{
-                \sum x_i^2
-            }
-            \\
-            &= \beta_1
-        \end{split}
-    \]
+    We have
+    \begin{gather*}
+        T_\theta = \begin{bmatrix}
+            -\sin\phi\sin\theta \\
+            \sin\phi\cos\theta \\
+            0
+        \end{bmatrix} \qquad
+        T_\phi = \begin{bmatrix}
+            \cos\theta\cos\phi \\
+            \sin\theta\cos\phi \\
+            -\sin\phi
+        \end{bmatrix} \\
+        T_\theta \times T_\phi = \begin{bmatrix}
+            -\sin^2\phi \cos\theta \\
+            -\sin^2\phi\sin\theta \\
+            -\sin\phi\cos\phi
+        \end{bmatrix}
+    \end{gather*}
+    \begin{align*}
+        \|T_\theta \times T_\phi\| &= \sqrt{\sin^4\phi \cos^2\theta + \sin^4\phi\sin^2\theta + \sin^2\phi\cos^2\phi} \\
+        &=\sqrt{\sin^4\phi + \sin^2\phi\cos^2\phi}\\
+        &=\sqrt{\sin^2\phi} \\
+        &=\sin\phi \qquad \text{since $\phi \in [0, \pi]$}.
+    \end{align*}
 
-    Thus since our estimator's expected value is \(\beta_1\), we can conclude
-    that the bias of our estimator is 0.
+    Therefore,
+    \begin{align*}
+        \iint_D \|T_\theta \times T_\phi\| \, dA &= \int_0^\pi\int_0^{2\pi}(\sin\phi) \, d\theta \, d\phi \\
+        &= 4\pi.
+    \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.4: \#4
+
+    The torus $T$ can be represented parametrically by the function $\boldsymbol{\Phi}: D \rightarrow \mathbb{R}^3$, where $\boldsymbol{\Phi}$ is given by the coordinate functions $x=(R+\cos \phi) \cos \theta$ $y=(R+\cos \phi) \sin \theta, z=\sin \phi ; D$ is the rectangle $[0,2 \pi] \times[0,2 \pi]$, that is, $0 \leq \theta \leq 2 \pi, 0 \leq \phi \leq 2 \pi$; and $R>1$ is fixed (see Figure 7.4.6). Show that $A(T)=(2 \pi)^2 R$, first by using formula (3) and then by using formula (6).
     \\
 
-    For the variance:
+    \solution
 
-    \[
-        \begin{split}
-            \Var[\hat{\beta_1}]
-            &= \Var \left[ \frac{
-                \sum {x_i Y_i}
-            }{
-                \sum x_i^2
-            }\right]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                \sum {x_i^2}
-            }{
-                \sum x_i^2 \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \Var[Y_i]
-            \\
-            &=
-            \frac{
-                1
-            }{
-                \sum x_i^2
-            } \sigma^2
-            \\
-            &=
-            \frac{
-                \sigma^2
-            }{
-                \sum x_i^2
-            }
-        \end{split}
-    \]
+    Formula (3) is
+    \begin{equation*}
+    A(S)=\iint_D \sqrt{\left[\frac{\partial(x, y)}{\partial(\theta, \phi)}\right]^2+\left[\frac{\partial(y, z)}{\partial(\theta, \phi)}\right]^2+\left[\frac{\partial(x, z)}{\partial(\theta, \phi)}\right]^2} \, d\theta \, d\phi.
+    \end{equation*}
 
-\end{homeworkProblem}
+    We compute as follows
+    \begin{align*}
+        \pderiv{(x,y)}{(\theta,\phi)} &= \begin{vmatrix}
+            -(R+\cos\phi)\sin\theta & -\sin\phi\cos\theta \\
+            (R+\cos\phi)\cos\theta & -\sin\phi\sin\theta
+        \end{vmatrix}\\
+        &= (R+\cos\phi)\sin\phi
+    \end{align*}
+    \begin{align*}
+        \pderiv{(y,z)}{(\theta,\phi)} &= \begin{vmatrix}
+            (R+\cos\phi)\cos\theta & -\sin\phi\sin\theta \\
+            0 & \cos\phi
+        \end{vmatrix}\\
+        &= (R+\cos\phi)\cos\theta\cos\phi
+    \end{align*}
+        \begin{align*}
+        \pderiv{(x,y)}{(\theta,\phi)} &= \begin{vmatrix}
+            -(R+\cos\phi)\sin\theta & -\sin\phi\cos\theta \\
+            0 & \cos\phi
+        \end{vmatrix}\\
+        &= -(R+\cos\phi)\sin\theta\cos\phi
+    \end{align*}
+    \begin{equation*}
+        \sqrt{\left[\frac{\partial(x, y)}{\partial(\theta, \phi)}\right]^2+\left[\frac{\partial(y, z)}{\partial(\theta, \phi)}\right]^2+\left[\frac{\partial(x, z)}{\partial(\theta, \phi)}\right]^2} = R+\cos\phi.
+    \end{equation*}
 
-\pagebreak
+    Thus, we have
+    \begin{align*}
+        A(s) &= \int_0^{2\pi} \int_0^{2\pi} (R+\cos\phi) \, d\phi \, d\theta \\
+        &= \int_0^{2\pi} 2\pi R \, d\theta \\
+        &= (2\pi)^2R
+    \end{align*}
+    as required.
+    \\
+    
+    Formula (6) is
+    \begin{equation*}
+    A=2 \pi \int_a^b\left(|x| \sqrt{1+\left[f^{\prime}(x)\right]^2}\right) d x
+    \end{equation*}
 
-\begin{homeworkProblem}
-    Prove a polynomial of degree \(k\), \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots
-    + a_1n^1 + a_0n^0\) is a member of \(\Theta(n^k)\) where \(a_k \hdots a_0\)
-    are nonnegative constants.
+    We have
+    \begin{equation*}
+        f(x) = \sqrt{1-(x-R)^2}
+    \end{equation*}
+    which is the graph of the upper half cross-section of the torus we wish to revolve about the y-axis.
 
-    \begin{proof}
-        To prove that \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 +
-        a_0n^0\), we must show the following:
-
-        \[
-            \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
-            f(n) \leq c_2 \cdot g(n)}
-        \]
-
-        For the first inequality, it is easy to see that it holds because no
-        matter what the constants are, \(n^k \leq a_kn^k + a_{k - 1}n^{k - 1} +
-        \hdots + a_1n^1 + a_0n^0\) even if \(c_1 = 1\) and \(n_0 = 1\).  This
-        is because \(n^k \leq c_1 \cdot a_kn^k\) for any nonnegative constant,
-        \(c_1\) and \(a_k\).
-        \\
-
-        Taking the second inequality, we prove it in the following way.
-        By summation, \(\sum\limits_{i=0}^k a_i\) will give us a new constant,
-        \(A\). By taking this value of \(A\), we can then do the following:
-
-        \[
-            \begin{split}
-                a_kn^k + a_{k - 1}n^{k - 1} + \hdots + a_1n^1 + a_0n^0 &=
-                \\
-                &\leq (a_k + a_{k - 1} \hdots a_1 + a_0) \cdot n^k
-                \\
-                &= A \cdot n^k
-                \\
-                &\leq c_2 \cdot n^k
-            \end{split}
-        \]
-
-        where \(n_0 = 1\) and \(c_2 = A\). \(c_2\) is just a constant. Thus the
-        proof is complete.
-    \end{proof}
-\end{homeworkProblem}
-
-\pagebreak
-
-%
-% Non sequential homework problems
-%
-
-% Jump to problem 18
-\begin{homeworkProblem}[18]
-    Evaluate \(\sum_{k=1}^{5} k^2\) and \(\sum_{k=1}^{5} (k - 1)^2\).
-\end{homeworkProblem}
-
-% Continue counting to 19
-\begin{homeworkProblem}
-    Find the derivative of \(f(x) = x^4 + 3x^2 - 2\)
-\end{homeworkProblem}
-
-% Go back to where we left off
-\begin{homeworkProblem}[6]
-    Evaluate the integrals
-    \(\int_0^1 (1 - x^2) \dx\)
+    We compute
+    \begin{equation*}
+        f'(x)= \frac{-(x-R)}{\sqrt{1-(x-R)^2}}
+    \end{equation*}
     and
-    \(\int_1^{\infty} \frac{1}{x^2} \dx\).
+    \begin{align*}
+        \sqrt{1+[f'(x)]^2} &= \sqrt{1+\frac{(x-R)^2}{1-(x-R)^2}} \\
+        &= \frac{1}{\sqrt{1-(x-R)^2}}.
+    \end{align*}
+
+    Thus, we have
+    \begin{align*}
+        2 \pi \int_a^b\left(|x| \sqrt{1+\left[f^{\prime}(x)\right]^2}\right) d x &= 2\pi \int_{R-1}^{R+1}\frac{x}{\sqrt{1-(x-R)^2}} \, dx \qquad \text{$|x|=x$ since $R>1$} \\
+        &= 2\pi \left[\int_{R-1}^{R+1}\frac{x-R}{\sqrt{1-(x-R)^2}} \, dx + \int_{R-1}^{R+1}\frac{R}{\sqrt{1-(x-R)^2}} \, dx\right]
+    \end{align*}
+
+    We compute the first integral
+    \begin{align*}
+        \int_{R-1}^{R+1}\frac{x-R}{\sqrt{1-(x-R)^2}} \, dx &= \int_0^0 \frac{du}{2\sqrt{u}} \qquad \text{substitute $u=1-(x-R)^2$} \\
+        &= 0.
+    \end{align*}
+
+    We compute the second integral
+    \begin{align*}
+        \int_{R-1}^{R+1}\frac{R}{\sqrt{1-(x-R)^2}} \, dx &= [R \arcsin(x-R)]_{R-1}^{R+1} \\
+        &= \pi R.
+    \end{align*}
+
+    Thus, 
+    \begin{equation*}
+        2 \pi \int_a^b\left(|x| \sqrt{1+\left[f^{\prime}(x)\right]^2}\right) d x = 2\pi^2 R.
+    \end{equation*}
+
+    Multiplying by 2 (since we can only graph half of the torus cross-section), we obtain $4\pi^2R$ as required.
+    
+    
+
+    
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.5: \#9
+
+    Evaluate $\iint_S z d S$, where $S$ is the upper hemisphere of radius $a$, that is, the set of $(x, y, z)$ with $z=\sqrt{a^2-x^2-y^2}$
+    \\
+
+    \solution
+    
+    Using spherical coordinates, we obtain the surface parametrization
+    \begin{equation*}
+        \Phi(\theta, \phi)=(a\sin\phi\cos\theta,a\sin\phi\sin\theta,a\cos\phi)
+    \end{equation*}
+    where $\phi \in [0,\pi/2]$ and $\theta \in [0,2\pi]$.
+    \\
+    
+    We have
+    \begin{gather*}
+        T_\theta = \begin{bmatrix}
+            -a\sin\phi\sin\theta \\
+            a\sin\phi\cos\theta\\
+            0
+        \end{bmatrix} \qquad
+        T_\phi = \begin{bmatrix}
+            a\cos\phi\cos\theta\\
+            a\cos\phi\sin\theta\\
+            -a\sin\phi
+        \end{bmatrix}\\
+        T_\theta \times T_\phi = \begin{bmatrix}
+            -a^2\sin^2\phi\cos\theta\\
+            -a^2\sin^2\phi\sin\theta\\
+            -a^2\cos\phi\sin\phi
+        \end{bmatrix}
+    \end{gather*}
+    \begin{align*}
+        \|T_\theta \times T_\phi\| = a^2\sin\phi.
+    \end{align*}
+
+    Thus, we obtain
+    \begin{align*}
+        \iint_S z d S &= \int_0^{2\pi} \int_0^{\pi/2} (a\cos\phi)(a^2\sin\phi) \, d\phi \, d\theta\\
+        &= \int_0^{2\pi} \frac{a^3}{2} \, d\theta \\
+        &= \pi a^3.
+    \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.5: \#12
+
+    Verify that in spherical coordinates, on a sphere of radius $R$,
+    \begin{equation*}
+    \left\|\mathbf{T}_\phi \times \mathbf{T}_\theta\right\| \, d \phi \, d \theta=R^2 \sin \phi \, d \phi \, d \theta
+    \end{equation*}
+
+    \solution
+    
+    We have the surface parametrization
+    \begin{equation*}
+        \Phi(\theta, \phi)=(R\sin\phi\cos\theta,R\sin\phi\sin\theta,R\cos\phi)
+    \end{equation*}
+    where $\phi \in [0,\pi]$ and $\theta \in [0,2\pi]$.
+    \\
+    
+    We compute
+    \begin{gather*}
+        T_\theta = \begin{bmatrix}
+            -R\sin\phi\sin\theta \\
+            R\sin\phi\cos\theta\\
+            0
+        \end{bmatrix} \qquad
+        T_\phi = \begin{bmatrix}
+            R\cos\phi\cos\theta\\
+            R\cos\phi\sin\theta\\
+            -R\sin\phi
+        \end{bmatrix}\\
+        T_\theta \times T_\phi = \begin{bmatrix}
+            -R^2\sin^2\phi\cos\theta\\
+            -R^2\sin^2\phi\sin\theta\\
+            -R^2\cos\phi\sin\phi
+        \end{bmatrix}
+    \end{gather*}
+    \begin{align*}
+        \|T_\theta \times T_\phi\| &= \sqrt{(-R^2\sin^2\phi\cos\theta)^2+(-R^2\sin^2\phi\sin\theta)^2 + (-R^2\cos\phi\sin\phi)^2} \\
+        &= \sqrt{R^4\sin^2\phi[\sin^2\phi(\cos^2\theta+\sin^2\theta)+\cos^2\phi]} \\
+        &= \sqrt{R^4\sin^2\phi}\\
+        &= R^2\sin\phi \qquad \text{since $R^2\sin\phi\ge0$}
+    \end{align*}
+    as required.
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.6: \#2
+    
+    Evaluate the surface integral
+    \begin{equation*}
+    \iint_S \mathbf{F} \cdot d \mathbf{S}
+    \end{equation*}
+    where $\mathbf{F}(x, y, z)=x \mathbf{i}+y \mathbf{j}+z^2 \mathbf{k}$ and $S$ is the surface parameterized by $\Phi(u, v)=(2 \sin u, 3 \cos u, v)$, with $0 \leq u \leq 2 \pi$ and $0 \leq v \leq 1$
+    \\
+
+    \solution
+
+    We have
+    \begin{gather*}
+        T_u = \begin{bmatrix}
+            2\cos u\\
+            -3\sin u\\
+            0
+        \end{bmatrix} \qquad
+        T_v = \begin{bmatrix}
+            0\\0\\1
+        \end{bmatrix}\\
+        T_u \times T_v = \begin{bmatrix}
+            -3\sin u\\
+            -2\cos u\\
+            0
+        \end{bmatrix}\\
+        (T_u \times T_v) \cdot F =\begin{bmatrix}
+            -3\sin u\\
+            -2\cos u\\
+            0
+        \end{bmatrix} \cdot \begin{bmatrix}
+            2\sin u\\
+            3\cos u\\
+            v^2
+        \end{bmatrix} = -6.
+    \end{gather*}
+
+    Thus, we obtain
+    \begin{align*}
+        \iint_S \mathbf{F} \cdot d \mathbf{S} &= \int_0^{2\pi}\int_0^1 -6\,dv\,du \\
+        &= -12\pi.
+    \end{align*}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Section 7.6: \#7
+
+    Let $S$ be the closed surface that consists of the hemisphere $x^2+y^2+z^2=1, z \geq 0$, and its base $x^2+y^2 \leq 1, z=0$. Let $\mathbf{E}$ be the electric field defined by $\mathbf{E}(x, y, z)=2 x \mathbf{i}+2 y \mathbf{j}+2 z \mathbf{k}$. Find the electric flux across $S$. (HINT: Break $S$ into two pieces $S_1$ and $S_2$ and evaluate $\iint_{S_1} \mathbf{E} \cdot d \mathbf{S}$ and $\iint_{S_2} \mathbf{E} \cdot d \mathbf{S}$ separately.)
+    \\
+
+    \solution
+    
+    The electric flux across $S$ is
+    \begin{equation*}
+        \iint_S E \cdot \, dS = \iint_{S_1} E \cdot \, dS + \iint_{S_2} E \cdot \, dS
+    \end{equation*}
+    where $S_1$ is the hemisphere and $S_2$ is the base, both with unit normals that face outwards. We parametrize $S_1$ with
+    \begin{equation*}
+        \Phi_1(\theta,\phi)=(\sin\phi\cos\theta, \sin\phi\sin\theta,\cos\phi)
+    \end{equation*}
+    where $\phi\in[0,\pi/2]$ and $\theta\in[0,2\pi]$.
+    \\
+    
+    From Problem 7, we know that
+    \begin{equation*}
+        T_\phi \times T_\theta = \begin{bmatrix}
+            \sin^2\phi\cos\theta\\
+            \sin^2\phi\sin\theta\\
+            \cos\phi\sin\phi
+        \end{bmatrix}.
+    \end{equation*}
+
+    Thus,
+    \begin{align*}
+        E \cdot (T_\phi \times T_\theta) &= \begin{bmatrix}
+            2\sin\phi\cos\theta \\
+            2\sin\phi\sin\theta\\
+            2\cos\phi
+        \end{bmatrix}
+        \cdot
+        \begin{bmatrix}
+            \sin^2\phi\cos\theta\\
+            \sin^2\phi\sin\theta\\
+            \cos\phi\sin\phi
+        \end{bmatrix} \\
+        &= 2\sin\phi.
+    \end{align*}
+
+    \begin{align*}
+        \iint_{S_1} E \cdot \, dS &= \int_0^{2\pi} \int_0^{\pi/2} (2\sin\phi) \, d\phi \, d\theta \\
+        &= 4\pi.
+    \end{align*}
+
+    Now we parameterize $S_2$ by
+    \begin{equation*}
+        \Phi_2(r,\theta) = (r\cos\theta, r\sin\theta, 0)
+    \end{equation*}
+    where $r\in[0,1]$ and $\theta\in[0,2\pi]$. We obtain
+    \begin{gather*}
+        T_r = \begin{bmatrix}
+            \cos\theta\\
+            \sin\theta\\
+            0
+        \end{bmatrix} \qquad
+        T_\theta = \begin{bmatrix}
+            -r\sin\theta\\
+            r\cos\theta\\
+            0
+        \end{bmatrix} \\
+        T_\theta \times T_r = \begin{bmatrix}
+            0 \\ 0 \\ -r
+        \end{bmatrix}.
+    \end{gather*}
+
+    Thus,
+    \begin{align*}
+        E \cdot (T_\theta \times T_r) &= \begin{bmatrix}
+            2r\cos\theta\\
+            2r\sin\theta\\
+            0
+        \end{bmatrix}
+        \cdot
+        \begin{bmatrix}
+            0 \\ 0 \\ -r
+        \end{bmatrix} \\
+        &= 0.
+    \end{align*}
+
+    Therefore,
+    \begin{equation*}
+        \iint_{S_2} E \cdot \, dS = 0
+    \end{equation*}
+    and 
+    \begin{equation*}
+        \iint_S E \cdot \, dS = 4\pi.
+    \end{equation*}
 \end{homeworkProblem}
 
 \end{document}
